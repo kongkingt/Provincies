@@ -4,13 +4,8 @@ Zelfstandig browserspel over de 10 Belgische provincies en hun hoofdsteden.
 
 ## Spelen
 
-Open `StartHier.html` rechtstreeks, of start een lokale server:
-
-```sh
-python3 -m http.server 8000 --directory games/belgie-provincies
-```
-
-Open daarna <http://localhost:8000/StartHier.html>.
+1. [Download de zip](https://github.com/kongkingt/Provincies/archive/refs/heads/main.zip) en pak hem uit.
+2. Dubbelklik op `StartHier.html`. Het spel opent in je browser. Je hebt niets te installeren.
 
 ## Spelregels
 
@@ -29,4 +24,4 @@ De interface gebruikt de lokale Stylez-tokens uit `stylez-tokens.css` met de `cl
 
 ## Geografische data
 
-De vereenvoudigde SVG-paden in `map-data.js` zijn afgeleid van `Belgium.provinces.WGS84.geojson` uit [Belgium Geographic Data](https://github.com/mathiasleroy/Belgium-Geographic-Data), copyright 2015 Mathias Leroy, beschikbaar onder de MIT-licentie. Brussel is uit de speelbare gebieden gefilterd. De WGS84-coördinaten worden lokaal equirectangulair geprojecteerd met lengtegraadcorrectie op de gemiddelde Belgische breedtegraad, zodat de landsvorm niet horizontaal wordt uitgerekt.
+De vereenvoudigde SVG-paden in `map-data.js` zijn afgeleid van `Belgium.provinces.WGS84.geojson` uit [Belgium Geographic Data](https://github.com/mathiasleroy/Belgium-Geographic-Data), copyright 2015 Mathias Leroy, beschikbaar onder de MIT-licentie (zie `LICENSE`). Brussel is uit de speelbare gebieden gefilterd. De WGS84-coördinaten worden lokaal equirectangulair geprojecteerd met lengtegraadcorrectie op de gemiddelde Belgische breedtegraad, zodat de landsvorm niet horizontaal wordt uitgerekt.
