@@ -1,18 +1,24 @@
 <!doctype html>
-<html lang="nl">
+<html lang="nl" data-mode="clean" data-style="kawaii">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101d31">
-  <meta name="description" content="Een snel aardrijkskundespel over de Belgische provincies en hun hoofdsteden.">
-  <title>Provinciesprint — België</title>
+  <meta name="theme-color" content="#FBF6EA">
+  <meta name="description" content="Een vrolijk aardrijkskundespel over de Belgische provincies en hun hoofdsteden.">
+  <title>Provinciepret — België</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stylez-tokens.css">
   <link rel="stylesheet" href="game.css">
 </head>
 <body>
+  <!-- Hoekjesvriendjes: gedeelde stylez-bouwstenen; bewust niet display:none. -->
+  <div class="page-confetti" aria-hidden="true"></div>
   <header class="site-header">
-    <a class="brand" href="./" aria-label="Provinciesprint, opnieuw beginnen">
-      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span>Provincie<span>-sprint</span></span>
+    <a class="brand" href="StartHier.html" aria-label="Provinciepret, opnieuw beginnen">
+      <span class="brand-pal" aria-hidden="true"><img class="pal-art" src="pals/feestpuppy.webp" width="480" height="480" alt="" decoding="async"></span>
+      <span>Provincie<span>pret!</span></span>
     </a>
     <div class="header-score" id="header-score" hidden>
       <span id="round-label">Ronde 1 van 2</span>
@@ -23,18 +29,26 @@
   <main>
     <section class="intro screen" id="intro-screen" aria-labelledby="intro-title">
       <div class="intro-copy">
-        <p class="eyebrow">Ken jij België?</p>
-        <h1 id="intro-title">Tien provincies.<br><em>Twee rondes.</em><br>Elke seconde telt.</h1>
-        <p class="intro-text">Klik eerst alle provincies aan op de kaart. Sleep daarna elke provinciehoofdstad naar de juiste plaats. Jouw twee tijden vormen samen de eindscore.</p>
+        <p class="eyebrow">Een mini-reis door België</p>
+        <h1 id="intro-title">Tien provincies.<br><em>Twee rondes.</em><br>Heel veel pret.</h1>
+        <p class="intro-text">Klik eerst alle provincies aan op de kaart. Sleep daarna elke provinciehoofdstad naar de juiste plek. De hoekjesvriendjes supporteren voor jouw snelste tijd!</p>
         <button class="primary-button" id="start-button" type="button">
-          Start de sprint <span aria-hidden="true">→</span>
+          Kom, we gaan! <span aria-hidden="true">♥</span>
         </button>
       </div>
       <div class="intro-visual" aria-hidden="true">
-        <div class="flag-card"><span>10</span><small>provincies</small></div>
+        <div class="flag-card">
+          <span class="flag-number">10</span><small>provincies om te vinden</small>
+          <span class="flag-face"><img class="pal-art" src="pals/feestkat.webp" width="480" height="480" alt="" decoding="async"></span>
+        </div>
         <div class="round-card round-card-one"><b>01</b><span>Vind ze<br>op de kaart</span></div>
         <div class="round-card round-card-two"><b>02</b><span>Sleep de<br>hoofdsteden</span></div>
-        <div class="route-line"></div>
+        <div class="mascot-huddle">
+          <div class="mascot mascot-cream"><img class="pal-art" src="pals/wafel.webp" width="480" height="480" alt="" decoding="async"></div>
+          <div class="mascot mascot-mint"><img class="pal-art" src="pals/konijn.webp" width="480" height="480" alt="" decoding="async"></div>
+          <div class="mascot mascot-butter mascot-cat"><img class="pal-art" src="pals/kat.webp" width="480" height="480" alt="" decoding="async"></div>
+          <div class="mascot mascot-sky"><img class="pal-art" src="pals/puppy.webp" width="480" height="480" alt="" decoding="async"></div>
+        </div>
       </div>
     </section>
 
@@ -51,11 +65,13 @@
 
       <div class="game-layout">
         <div class="map-shell">
+          <div class="corner-pal corner-pal-map" aria-hidden="true"><img class="pal-art" src="pals/konijn.webp" width="480" height="480" alt="" decoding="async"></div>
           <svg id="belgium-map" viewBox="0 0 760 600" role="group" aria-label="Interactieve kaart van de tien Belgische provincies"></svg>
           <div class="map-note"><span></span> Brussel is een gewest, geen provincie</div>
         </div>
         <aside class="answer-panel" aria-labelledby="answer-title">
           <p class="panel-number" aria-hidden="true" id="question-number">01</p>
+          <div class="corner-pal corner-pal-panel" aria-hidden="true"><img class="pal-art" src="pals/kat.webp" width="480" height="480" alt="" decoding="async"></div>
           <div>
             <p class="eyebrow" id="answer-eyebrow">Gevraagd</p>
             <h2 id="answer-title"><span id="answer-prefix">Waar ligt</span> <span id="target-repeat">Antwerpen</span><span id="answer-punctuation">?</span></h2>
@@ -73,13 +89,19 @@
       <div class="big-time" id="province-time">00:00,00</div>
       <h1 id="intermission-title">Kaartkenner.<br>Nu de hoofdsteden.</h1>
       <p>Sleep elke stad naar haar provincie. De tweede klok start pas wanneer je hieronder klikt.</p>
-      <button class="primary-button" id="capital-start-button" type="button">Start ronde 2 <span aria-hidden="true">→</span></button>
+      <div class="result-pal mascot mascot-sky" aria-hidden="true"><img class="pal-art" src="pals/feestpuppy.webp" width="480" height="480" alt="" decoding="async"></div>
+      <button class="primary-button" id="capital-start-button" type="button">Op naar ronde 2 <span aria-hidden="true">♥</span></button>
     </section>
 
     <section class="finish screen result-card" id="finish-screen" hidden aria-labelledby="finish-title">
       <p class="eyebrow">Sprint voltooid</p>
       <h1 id="finish-title">Jouw eindtijd</h1>
       <div class="final-time" id="total-time">00:00,00</div>
+      <div class="finish-party" aria-hidden="true">
+        <div class="mascot mascot-cream"><img class="pal-art" src="pals/wafel.webp" width="480" height="480" alt="" decoding="async"></div>
+        <div class="mascot mascot-butter mascot-cat"><img class="pal-art" src="pals/feestkat.webp" width="480" height="480" alt="" decoding="async"></div>
+        <div class="mascot mascot-mint"><img class="pal-art" src="pals/feestkonijn.webp" width="480" height="480" alt="" decoding="async"></div>
+      </div>
       <div class="score-breakdown">
         <div><span>Provincies</span><strong id="result-province-time">00:00,00</strong></div>
         <span aria-hidden="true">+</span>
@@ -107,11 +129,11 @@
         <ol id="leaderboard-list"></ol>
         <p class="empty-board" id="empty-board">Nog geen tijden. Jij kunt de eerste zijn.</p>
       </section>
-      <button class="primary-button" id="restart-button" type="button">Nog een poging <span aria-hidden="true">↻</span></button>
+      <button class="primary-button" id="restart-button" type="button">Nog een rondje <span aria-hidden="true">↻</span></button>
     </section>
   </main>
 
-  <footer><span>België · 10 provincies</span><span>Gemaakt om snel te leren</span></footer>
+  <footer><span>België · 10 provincies</span><span>Gemaakt met kaartjes, knuffels en heel veel oefenpret</span></footer>
 
   <script src="map-data.js"></script>
   <script src="game.js"></script>

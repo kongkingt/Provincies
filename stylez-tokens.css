@@ -1,0 +1,802 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   STYLEZ — DUAL-MODE DESIGN TOKENS
+   One token layer, two modes:
+     [data-mode="console"]  → dark instrument panel (your signature)
+     [data-mode="clean"]    → light polished SaaS (the "Monday" polish)
+   Scales (space / radius / type / motion / elevation) are mode-agnostic.
+   Only surfaces, text, borders and accent change per mode.
+   Grounded in your real Mission Control + theme values.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── FONTS ─────────────────────────────────────────────────────────── */
+  --font-display: "Rajdhani", "Chakra Petch", "Eurostile", sans-serif;  /* console display: picked 2026-10-27, restrained + readable */
+  --font-body:    "Inter", "IBM Plex Sans", "Barlow", "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", "JetBrains Mono", "DejaVu Sans Mono", monospace;
+
+  /* ── TYPE SCALE (px) — restrained, 1.2–1.25 rhythm ─────────────────── */
+  --fs-xs:   11px;   /* captions, legend chips, LED labels  */
+  --fs-sm:   13px;   /* secondary text, table cells         */
+  --fs-base: 14px;   /* body default                        */
+  --fs-md:   16px;   /* lead paragraph, card titles         */
+  --fs-lg:   20px;   /* section headings                    */
+  --fs-xl:   26px;   /* panel titles                        */
+  --fs-2xl:  34px;   /* page title                          */
+  --fs-3xl:  46px;   /* hero metric (the big number)        */
+  --fs-stat: 64px;   /* oversized readout, gauge value      */
+
+  --lh-tight: 1.1;   /* numbers, headings                   */
+  --lh-snug:  1.35;  /* card text                           */
+  --lh-body:  1.55;  /* paragraphs                          */
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+
+  --tracking-tight:  -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;  /* uppercase section labels     */
+  --tracking-mega:   0.14em;  /* LED/eyebrow micro-labels      */
+
+  /* ── SPACING — 4px base, strict rhythm (this is 80% of "polish") ───── */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ── RADIUS ────────────────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   10px;   /* default card/panel               */
+  --radius-lg:   14px;   /* large panels                     */
+  --radius-xl:   20px;   /* hero containers, CRT bezel        */
+  --radius-pill: 999px;
+  --radius-round:50%;
+
+  /* ── BORDERS ───────────────────────────────────────────────────────── */
+  --border-w:      1px;
+  --border-w-thick:2px;
+
+  /* ── MOTION ────────────────────────────────────────────────────────── */
+  --dur-instant: 80ms;
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    380ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);   /* snappy settle       */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);/* switch/needle flick  */
+
+  /* ── BRAND / ENTITY HUES (stable across both modes) ────────────────── */
+  --agent-pawpall:        #FF2DAF;
+  --agent-kodax:          #66FF00;
+  --agent-lynx:           #7B2CFF;
+  --agent-hawk:           #3EC1D3;
+  --agent-ian:            #E1FF40;
+  --agent-mandy:          #00F5C8;
+  --agent-fox:            #F59E0B;
+  --proj-mission-control: #F30873;
+  --proj-codex:           #EF7FFF;
+  --proj-apple-icloud:    #0072BC;
+  --proj-agentmail:       #0072BC;
+  --proj-clawpaw:         #7673A3;
+  --proj-pawpall:         #ABFE80;
+
+  /* ── KLEURBELEID per preset: free | fixed ───────────────────────────── */
+  --color-policy: free;   /* default: palet is een dial (skin, mood, paletten). Een preset met `fixed` zet het zelf: het palet IS de identiteit, niet wijzigen. Zie arsenal.md § Kleurbeleid. */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CONSOLE MODE — dark instrument panel (default)
+   ═══════════════════════════════════════════════════════════════════════ */
+:root,
+[data-mode="console"] {
+  color-scheme: dark;
+
+  /* surfaces: 7 deliberate layers, bg-base is the deepest */
+  --bg-base:    #08090b;
+  --bg-panel:   #0e1014;
+  --bg-card:    #13151a;
+  --bg-hover:   #1a1d24;
+  --bg-input:   #1a1d24;
+  --bg-topbar:  #0b0d10;
+  --bg-sidebar: #0d0f13;
+
+  /* "brushed metal" fills for instrument panels & bezels */
+  --metal-panel: linear-gradient(180deg, #1b1e25 0%, #141720 100%);
+  --metal-bezel: linear-gradient(180deg, #2a2e38 0%, #0d0f14 100%);
+  --metal-groove: repeating-linear-gradient(90deg,
+      transparent, transparent 3px, rgba(255,255,255,.015) 4px);
+
+  --border:      #1f2330;
+  --border-soft: #161920;
+  --line:        #1f2330;   /* grid lines, dividers */
+
+  --text-primary:   #e8eaf0;
+  --text-secondary: #8b93a3;
+  --text-muted:     #545b6b;
+
+  --accent:      #66FF00;                       /* phosphor green    */
+  --accent-dim:  rgba(102, 255, 0, 0.12);
+  --accent-glow: rgba(102, 255, 0, 0.30);
+
+  /* severity (neon, high-contrast on dark) */
+  --sev-ok:    #66FF00;
+  --sev-warn:  #E9FF3A;
+  --sev-bad:   #FF2DAF;
+  --sev-info:  #3EC1D3;
+
+  /* status fill bars (under cards, like the Control Plane) */
+  --fill-ok:   color-mix(in srgb, var(--sev-ok)  22%, transparent);
+  --fill-warn: color-mix(in srgb, var(--sev-warn) 22%, transparent);
+  --fill-bad:  color-mix(in srgb, var(--sev-bad) 22%, transparent);
+
+  /* CRT / phosphor graph surface */
+  --crt-bg:    radial-gradient(ellipse at center, #0a1f12 0%, #04120a 70%, #020a06 100%);
+  --crt-line:  #39FF9A;
+  --crt-glow:  0 0 8px rgba(57,255,154,.55);
+  --crt-grid:  rgba(57,255,154,.14);
+
+  /* elevation: inset structure + faint lift, never heavy drop shadows */
+  --elev-1: inset 0 1px 0 rgba(255,255,255,.03), 0 1px 2px rgba(0,0,0,.4);
+  --elev-2: inset 0 1px 0 rgba(255,255,255,.04), 0 4px 14px rgba(0,0,0,.5);
+  --elev-3: inset 0 1px 0 rgba(255,255,255,.05), 0 12px 34px rgba(0,0,0,.6);
+  --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--accent);
+}
+
+/* NEON sub-skin of console — indigo base + magenta accent (optional) */
+[data-mode="console"][data-skin="neon"] {
+  --bg-base:   #1A1A40;
+  --bg-panel:  #1e1e4a;
+  --bg-card:   #222258;
+  --bg-hover:  #2a2a6a;
+  --bg-input:  #2a2a6a;
+  --bg-topbar: #161640;
+  --bg-sidebar:#1c1c45;
+  --border:      #3a3a80;
+  --border-soft: #2a2a60;
+  --line:        #3a3a80;
+  --text-primary:#f0f0ff;
+  --text-secondary:#9a9ad0;
+  --text-muted:  #5555aa;
+  --accent:      #FF2DAF;
+  --accent-dim:  rgba(255,45,175,.15);
+  --accent-glow: rgba(255,45,175,.40);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CLEAN MODE — light polished SaaS (the "Monday" lift)
+   Softer, airy, layered soft shadows, muted-but-friendly status colors.
+   ═══════════════════════════════════════════════════════════════════════ */
+[data-mode="clean"] {
+  color-scheme: light;
+
+  --bg-base:    #f6f8fb;   /* app canvas, cool near-white   */
+  --bg-panel:   #ffffff;
+  --bg-card:    #ffffff;
+  --bg-hover:   #f0f3f8;
+  --bg-input:   #ffffff;
+  --bg-topbar:  #ffffff;
+  --bg-sidebar: #fbfcfe;
+
+  --metal-panel: #ffffff;
+  --metal-bezel: #eef1f6;
+  --metal-groove: none;
+
+  --border:      #e3e8ef;
+  --border-soft: #eef1f6;
+  --line:        #e8ecf2;
+
+  --text-primary:   #1c2430;   /* ink, not pure black        */
+  --text-secondary: #5b6472;
+  --text-muted:     #98a1b0;
+
+  --accent:      #2a6ff3;      /* friendly product blue       */
+  --accent-dim:  rgba(42,111,243,.08);
+  --accent-glow: rgba(42,111,243,.22);
+
+  /* severity — saturated enough to read as pills, not neon */
+  --sev-ok:    #22b573;
+  --sev-warn:  #f0a438;
+  --sev-bad:   #e4584f;
+  --sev-info:  #3aa3c9;
+
+  --fill-ok:   color-mix(in srgb, var(--sev-ok)  16%, white);
+  --fill-warn: color-mix(in srgb, var(--sev-warn) 16%, white);
+  --fill-bad:  color-mix(in srgb, var(--sev-bad) 16%, white);
+
+  /* CRT still available in clean mode if you want a retro graph island */
+  --crt-bg:    radial-gradient(ellipse at center, #0a1f12 0%, #04120a 70%, #020a06 100%);
+  --crt-line:  #39FF9A;
+  --crt-glow:  0 0 8px rgba(57,255,154,.5);
+  --crt-grid:  rgba(57,255,154,.14);
+
+  /* elevation: soft, layered, Monday-style — the real polish signal */
+  --elev-1: 0 1px 2px rgba(20,28,45,.06), 0 1px 1px rgba(20,28,45,.04);
+  --elev-2: 0 2px 6px rgba(20,28,45,.08), 0 6px 18px rgba(20,28,45,.06);
+  --elev-3: 0 8px 24px rgba(20,28,45,.10), 0 18px 48px rgba(20,28,45,.10);
+  --focus-ring: 0 0 0 3px var(--accent-dim);
+}
+
+/* ── alias: a light sage console-leaning skin from your Steel themes ──── */
+[data-mode="clean"][data-skin="sage"] {
+  --bg-base: #eef1eb;
+  --bg-panel:#f6f7f2;
+  --bg-hover:#dde6dc;
+  --border:  #b7c7b5;
+  --text-primary:#213128;
+  --text-secondary:#456b5f;
+  --accent:  #40764C;
+  --accent-dim: rgba(64,118,76,.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Base element defaults (safe to include once per page)
+   ═══════════════════════════════════════════════════════════════════════ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--text-primary);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+/* Any element that switches mode repaints its own canvas + re-resolves text,
+   so a nested [data-mode] block is fully self-contained (not inheriting the
+   parent mode's computed colors). */
+[data-mode] { background: var(--bg-base); color: var(--text-primary); }
+h1,h2,h3 { font-family: var(--font-display); line-height: var(--lh-tight); margin: 0; color: var(--text-primary); }
+.mono, .readout { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STYLE PRESETS  —  data-style="x", layered on top of a data-mode.
+   A preset overrides engine TOKENS (fonts, accent, radius, elevation,
+   surfaces), so every existing component adopts it automatically.
+   Load the preset's fonts on the page (hybrid: local() then Google link).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Swiss / International Typographic ──────────────────────────────────
+   Grotesk everything, one signal red, hard edges, flat (no shadows),
+   hairline rules. Font: Archivo. Natural home is clean (white) mode; the
+   console override gives the dark poster variant. */
+[data-style="swiss"]{
+  --font-display:"Archivo Expanded","Archivo",var(--font-body);
+  --accent:#E3261F; --accent-dim:rgba(227,38,31,.08); --accent-glow:rgba(227,38,31,.22);
+  --sev-bad:#E3261F;                         /* status reads in the one red */
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;  /* hard edges */
+  --radius-pill:999px;                       /* keep pills round if used */
+  --elev-1:none;--elev-2:none;--elev-3:none; /* flat: Swiss has no soft shadow */
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+  --tracking-mega:.14em;
+}
+[data-style="swiss"][data-mode="clean"]{
+  --bg-base:#ffffff;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#f3f3f3;--bg-input:#ffffff;
+  --bg-topbar:#ffffff;--bg-sidebar:#ffffff;
+  --text-primary:#111111;--text-secondary:#555555;--text-muted:#8a8a8a;
+  --border:#111111;--border-soft:#d8d8d8;--line:#111111;   /* hairlines in ink */
+}
+[data-style="swiss"][data-mode="console"]{
+  --bg-base:#0b0b0b;--bg-panel:#0b0b0b;--bg-card:#111111;--bg-hover:#1a1a1a;--bg-input:#111111;
+  --bg-topbar:#0b0b0b;--bg-sidebar:#0b0b0b;
+  --text-primary:#f4f4f4;--text-secondary:#9a9a9a;--text-muted:#6a6a6a;
+  --border:#f4f4f4;--border-soft:#2a2a2a;--line:#f4f4f4;
+}
+
+/* ── Bauhaus / Constructivist ───────────────────────────────────────────
+   Geometric, primary, diagonal energy. Jost (Futura-like) display, primaries
+   red/blue/yellow on warm off-white or near-black. Hard edges, flat, 3px rules.
+   Fonts: Jost + Inter. */
+[data-style="bauhaus"]{
+  --font-display:"Jost",var(--font-body);
+  --bau-red:#D42A1C; --bau-blue:#004E98; --bau-yellow:#F2C200;
+  --accent:#D42A1C; --accent-dim:rgba(212,42,28,.10); --accent-glow:rgba(212,42,28,.22);
+  --sev-bad:#D42A1C; --sev-info:#004E98; --sev-warn:#F2C200;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;  /* hard edges; circles are drawn, not rounded corners */
+  --radius-pill:999px;
+  --elev-1:none;--elev-2:none;--elev-3:none;
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+  --border-w-thick:3px;
+}
+[data-style="bauhaus"][data-mode="clean"]{
+  --bg-base:#F4F1E9;--bg-panel:#F4F1E9;--bg-card:#F4F1E9;--bg-hover:#ece7db;--bg-input:#ffffff;
+  --bg-topbar:#F4F1E9;--bg-sidebar:#F4F1E9;
+  --text-primary:#141414;--text-secondary:#4a4a4a;--text-muted:#8a8578;
+  --border:#141414;--border-soft:#cdc7b8;--line:#141414;
+}
+[data-style="bauhaus"][data-mode="console"]{
+  --bg-base:#141414;--bg-panel:#141414;--bg-card:#1b1b1b;--bg-hover:#242424;--bg-input:#1b1b1b;
+  --bg-topbar:#141414;--bg-sidebar:#141414;
+  --text-primary:#F4F1E9;--text-secondary:#b0ab9e;--text-muted:#7a766b;
+  --border:#F4F1E9;--border-soft:#2c2c2c;--line:#F4F1E9;
+}
+
+/* ── Editorial / Magazine ───────────────────────────────────────────────
+   Refined reading: Fraunces serif display, Inter body, cream ground, one deep
+   red (gold on dark). Flat, generous. Fonts: Fraunces + Inter. */
+[data-style="editorial"]{
+  --font-display:"Fraunces",Georgia,serif;
+  --accent:#9E2B25; --accent-dim:rgba(158,43,37,.08); --accent-glow:rgba(158,43,37,.20);
+  --sev-bad:#9E2B25;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;--radius-pill:999px;
+  --elev-1:none;--elev-2:none;--elev-3:none;
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="editorial"][data-mode="clean"]{
+  --bg-base:#F6F1E7;--bg-panel:#F6F1E7;--bg-card:#fffdf8;--bg-hover:#efe8d9;--bg-input:#fffdf8;
+  --bg-topbar:#F6F1E7;--bg-sidebar:#F6F1E7;
+  --text-primary:#1A1714;--text-secondary:#7a7066;--text-muted:#a79d90;
+  --border:#1A1714;--border-soft:#ddd3c4;--line:#1A1714;
+}
+[data-style="editorial"][data-mode="console"]{
+  --bg-base:#1A1714;--bg-panel:#1A1714;--bg-card:#221e1a;--bg-hover:#2b2621;--bg-input:#221e1a;
+  --bg-topbar:#1A1714;--bg-sidebar:#1A1714;
+  --text-primary:#F6F1E7;--text-secondary:#b7ab9b;--text-muted:#8a7f70;
+  --border:#F6F1E7;--border-soft:#39322b;--line:#F6F1E7;
+  --accent:#E0A96D;                           /* warm gold reads better than the red on dark */
+  --accent-dim:rgba(224,169,109,.12);--accent-glow:rgba(224,169,109,.24);
+}
+
+/* ── Brutalist / type-forward ───────────────────────────────────────────
+   Raw, oversized, mono body, hard 2px borders everywhere, one acid accent.
+   Body switches to mono on purpose. Fonts: Archivo Black + Space Mono. */
+[data-style="brutalist"]{
+  --font-display:"Archivo Black","Inter",sans-serif;
+  --font-body:"Space Mono","IBM Plex Mono",monospace;
+  --font-mono:"Space Mono","IBM Plex Mono",monospace;
+  --accent:#CCFF00; --accent-dim:rgba(204,255,0,.18); --accent-glow:rgba(204,255,0,.30);
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;--radius-pill:0;  /* hard everything */
+  --elev-1:none;--elev-2:none;--elev-3:none;
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+  --border-w:2px; --border-w-thick:2px;
+}
+[data-style="brutalist"][data-mode="clean"]{
+  --bg-base:#ffffff;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#f2f2f2;--bg-input:#ffffff;
+  --bg-topbar:#ffffff;--bg-sidebar:#ffffff;
+  --text-primary:#0c0c0c;--text-secondary:#555555;--text-muted:#888888;
+  --border:#0c0c0c;--border-soft:#0c0c0c;--line:#0c0c0c;
+}
+[data-style="brutalist"][data-mode="console"]{
+  --bg-base:#0c0c0c;--bg-panel:#0c0c0c;--bg-card:#111111;--bg-hover:#1a1a1a;--bg-input:#111111;
+  --bg-topbar:#0c0c0c;--bg-sidebar:#0c0c0c;
+  --text-primary:#ffffff;--text-secondary:#aaaaaa;--text-muted:#777777;
+  --border:#ffffff;--border-soft:#ffffff;--line:#ffffff;
+}
+
+/* ═══ Field-rooted presets (locked 2026-10-27) ═══════════════════════════ */
+
+/* ── Toner / Photocopy Lo-Fi ── Space Grotesk + Courier Prime, riso pink, flat */
+[data-style="toner"]{
+  --font-display:"Space Grotesk",var(--font-body);--font-mono:"Courier Prime","Courier New",monospace;--font-body:"Courier Prime","Courier New",monospace;
+  --accent:#FF3B8D;--accent-dim:rgba(255,59,141,.12);--accent-glow:rgba(255,59,141,.28);--sev-bad:#FF3B8D;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="toner"][data-mode="clean"]{
+  --bg-base:#e9e7e2;--bg-panel:#f2f0ec;--bg-card:#f2f0ec;--bg-hover:#ddd9d1;--bg-input:#ffffff;--bg-topbar:#e9e7e2;--bg-sidebar:#e9e7e2;
+  --text-primary:#161418;--text-secondary:#5a5752;--text-muted:#8a8680;--border:#2a2730;--border-soft:#c3c0ba;--line:#2a2730;
+}
+[data-style="toner"][data-mode="console"]{
+  --bg-base:#131214;--bg-panel:#1b1a1d;--bg-card:#1b1a1d;--bg-hover:#262429;--bg-input:#1b1a1d;--bg-topbar:#131214;--bg-sidebar:#131214;
+  --text-primary:#e7e5e2;--text-secondary:#9a9790;--text-muted:#6a6862;--border:#3a3740;--border-soft:#2a282c;--line:#3a3740;
+}
+
+/* ── Micrographics ── Archivo Expanded + IBM Plex Mono, hazard orange, flat */
+[data-style="micrographics"]{
+  --font-display:"Archivo Expanded","Inter",sans-serif;--font-mono:"IBM Plex Mono",monospace;--font-body:"Inter",sans-serif;
+  --accent:#FF5A1F;--accent-dim:rgba(255,90,31,.10);--accent-glow:rgba(255,90,31,.24);--sev-bad:#FF5A1F;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="micrographics"][data-mode="clean"]{
+  --bg-base:#F3F1EA;--bg-panel:#fbfaf5;--bg-card:#fbfaf5;--bg-hover:#e7e4da;--bg-input:#ffffff;--bg-topbar:#F3F1EA;--bg-sidebar:#F3F1EA;
+  --text-primary:#141414;--text-secondary:#5a584f;--text-muted:#8a8578;--border:#141414;--border-soft:#bdbab1;--line:#bdbab1;
+}
+[data-style="micrographics"][data-mode="console"]{
+  --bg-base:#111210;--bg-panel:#1b1c16;--bg-card:#1b1c16;--bg-hover:#242620;--bg-input:#1b1c16;--bg-topbar:#111210;--bg-sidebar:#111210;
+  --text-primary:#eceae3;--text-secondary:#9a978c;--text-muted:#6a6860;--border:#eceae3;--border-soft:#2e302c;--line:#2e302c;
+}
+
+/* ── Blotch / Liquid ── Fredoka + Hanken, neon on off-black, rounded */
+[data-style="blotch"]{
+  --font-display:"Fredoka","Hanken Grotesk",sans-serif;--font-body:"Hanken Grotesk",sans-serif;
+  --accent:#FF5FD1;--accent-dim:rgba(255,95,209,.14);--accent-glow:rgba(255,95,209,.34);
+  --sev-ok:#B6FF2E;--sev-info:#2B5BFF;--sev-bad:#FF5FD1;
+  --radius-xs:8px;--radius-sm:12px;--radius-md:16px;--radius-lg:22px;--radius-xl:28px;
+  --elev-1:0 1px 2px rgba(0,0,0,.4);--elev-2:0 6px 20px rgba(0,0,0,.5);--elev-3:0 14px 40px rgba(0,0,0,.6);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="blotch"][data-mode="clean"]{
+  --bg-base:#F4F2FF;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#ece9ff;--bg-input:#ffffff;--bg-topbar:#ffffff;--bg-sidebar:#F4F2FF;
+  --text-primary:#17131f;--text-secondary:#5b5570;--text-muted:#9a94b0;--border:#e4e0f2;--border-soft:#efecfa;--line:#e4e0f2;
+}
+[data-style="blotch"][data-mode="console"]{
+  --bg-base:#0E0E12;--bg-panel:#17171F;--bg-card:#17171F;--bg-hover:#222230;--bg-input:#17171F;--bg-topbar:#0E0E12;--bg-sidebar:#0E0E12;
+  --text-primary:#F4F2FF;--text-secondary:#9a97b8;--text-muted:#6a6788;--border:#26262f;--border-soft:#1f1f28;--line:#26262f;
+}
+
+/* ── Specimen Index ── Spectral + Libre Franklin, warm-earth, soft */
+[data-style="specimen"]{
+  --font-display:"Spectral",Georgia,serif;--font-body:"Libre Franklin",sans-serif;
+  --accent:#C77B52;--accent-dim:rgba(199,123,82,.12);--accent-glow:rgba(199,123,82,.24);
+  --sev-ok:#6E7A5E;--sev-bad:#9E4A3A;--sev-info:#6B4A5A;
+  --radius-xs:3px;--radius-sm:4px;--radius-md:5px;--radius-lg:6px;--radius-xl:8px;
+  --elev-1:0 1px 0 rgba(0,0,0,.04);--elev-2:0 2px 10px rgba(51,43,35,.08);--elev-3:0 10px 30px rgba(51,43,35,.12);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="specimen"][data-mode="clean"]{
+  --bg-base:#F0EADF;--bg-panel:#FBF7EF;--bg-card:#FBF7EF;--bg-hover:#e8e0d2;--bg-input:#ffffff;--bg-topbar:#F0EADF;--bg-sidebar:#F0EADF;
+  --text-primary:#332B23;--text-secondary:#7a6f5e;--text-muted:#a79d8c;--border:#cdbfa8;--border-soft:#ddd3c0;--line:#cdbfa8;
+}
+[data-style="specimen"][data-mode="console"]{
+  --bg-base:#1C1813;--bg-panel:#241F18;--bg-card:#241F18;--bg-hover:#2e2820;--bg-input:#241F18;--bg-topbar:#1C1813;--bg-sidebar:#1C1813;
+  --text-primary:#EDE6D8;--text-secondary:#b0a690;--text-muted:#8a7f6a;--border:#3a3127;--border-soft:#2a251d;--line:#3a3127;
+}
+
+/* ── Secession / Wiener Werkstatte ── Poiret One + Work Sans, oxblood + gold, flat */
+[data-style="secession"]{
+  --font-display:"Poiret One","Josefin Sans",sans-serif;--font-body:"Work Sans",sans-serif;
+  --accent:#7B2E2E;--accent-dim:rgba(123,46,46,.10);--accent-glow:rgba(123,46,46,.22);--sev-bad:#7B2E2E;--sev-warn:#B08D2A;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="secession"][data-mode="clean"]{
+  --bg-base:#F6F4EF;--bg-panel:#fdfcf9;--bg-card:#fdfcf9;--bg-hover:#ece9e1;--bg-input:#ffffff;--bg-topbar:#F6F4EF;--bg-sidebar:#F6F4EF;
+  --text-primary:#1A1A1A;--text-secondary:#6f6a61;--text-muted:#9a9384;--border:#1A1A1A;--border-soft:#d9d3c6;--line:#B08D2A;
+}
+[data-style="secession"][data-mode="console"]{
+  --bg-base:#121210;--bg-panel:#181815;--bg-card:#181815;--bg-hover:#22221e;--bg-input:#181815;--bg-topbar:#121210;--bg-sidebar:#121210;
+  --text-primary:#F6F4EF;--text-secondary:#b0ab9e;--text-muted:#8a857a;--border:#F6F4EF;--border-soft:#2b2a26;--line:#B08D2A;
+}
+
+/* ═══ History-rooted presets (locked 2026-10-27) ═════════════════════════ */
+
+/* ── Memphis / Postmodern ── Rubik + Space Grotesk, clashing brights, hard-offset shadow */
+[data-style="memphis"]{
+  --font-display:"Rubik",sans-serif;--font-body:"Space Grotesk",sans-serif;
+  --accent:#E8427D;--accent-dim:rgba(232,66,125,.12);--accent-glow:rgba(232,66,125,.28);
+  --sev-ok:#8FD9C0;--sev-warn:#F2C94C;--sev-bad:#E8427D;--sev-info:#36C5C5;
+  --radius-xs:4px;--radius-sm:5px;--radius-md:6px;--radius-lg:8px;--radius-xl:10px;
+  --elev-1:4px 4px 0 var(--text-primary);--elev-2:6px 6px 0 var(--text-primary);--elev-3:8px 8px 0 var(--text-primary);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;--border-w-thick:3px;
+}
+[data-style="memphis"][data-mode="clean"]{
+  --bg-base:#F5F0E8;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#efe9de;--bg-input:#ffffff;--bg-topbar:#F5F0E8;--bg-sidebar:#F5F0E8;
+  --text-primary:#1C1C1C;--text-secondary:#56534c;--text-muted:#8a857c;--border:#1C1C1C;--border-soft:#d8d2c6;--line:#1C1C1C;
+}
+[data-style="memphis"][data-mode="console"]{
+  --bg-base:#161616;--bg-panel:#1e1e1e;--bg-card:#1e1e1e;--bg-hover:#282828;--bg-input:#1e1e1e;--bg-topbar:#161616;--bg-sidebar:#161616;
+  --text-primary:#F5F0E8;--text-secondary:#b0aba0;--text-muted:#807c72;--border:#F5F0E8;--border-soft:#2c2c2c;--line:#F5F0E8;
+}
+
+/* ── Morris / Arts & Crafts (ornament module) ── EB Garamond, earthy, tone-on-tone */
+[data-style="morris"]{
+  --font-display:"EB Garamond",Georgia,serif;--font-body:"EB Garamond",Georgia,serif;
+  --accent:#9E4A3A;--accent-dim:rgba(158,74,58,.10);--accent-glow:rgba(158,74,58,.20);
+  --sev-ok:#5E6B4A;--sev-warn:#B8862F;--sev-bad:#9E4A3A;--sev-info:#2B3A52;
+  --radius-xs:2px;--radius-sm:3px;--radius-md:4px;--radius-lg:6px;--radius-xl:8px;
+  --elev-1:0 1px 0 rgba(43,58,82,.06);--elev-2:0 10px 30px -22px rgba(43,58,82,.5);--elev-3:0 18px 44px -26px rgba(43,58,82,.6);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="morris"][data-mode="clean"]{
+  --bg-base:#EDE4D1;--bg-panel:#f6f1e4;--bg-card:#f6f1e4;--bg-hover:#e3d8c0;--bg-input:#fffdf8;--bg-topbar:#EDE4D1;--bg-sidebar:#EDE4D1;
+  --text-primary:#2B2620;--text-secondary:#6f6456;--text-muted:#9a8f7a;--border:#2B3A52;--border-soft:#d6c9ad;--line:#d6c9ad;
+}
+[data-style="morris"][data-mode="console"]{
+  --bg-base:#171511;--bg-panel:#1d1a15;--bg-card:#1d1a15;--bg-hover:#272319;--bg-input:#1d1a15;--bg-topbar:#171511;--bg-sidebar:#171511;
+  --text-primary:#E6DBC4;--text-secondary:#b0a488;--text-muted:#8a7f6a;--border:#B8862F;--border-soft:#332d22;--line:#332d22;
+}
+
+/* ── Ornament rule-engine (module) ── PT Serif + Inter, figure/ground, period frames */
+[data-style="ornament"]{
+  --font-display:"PT Serif",Georgia,serif;--font-body:"Inter",sans-serif;
+  --accent:#B0323A;--accent-dim:rgba(176,50,58,.10);--accent-glow:rgba(176,50,58,.20);
+  --sev-ok:#5E6B4A;--sev-warn:#C08A2A;--sev-bad:#B0323A;--sev-info:#28426B;
+  --radius-xs:0;--radius-sm:0;--radius-md:2px;--radius-lg:3px;--radius-xl:4px;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="ornament"][data-mode="clean"]{
+  --bg-base:#F4EFE4;--bg-panel:#faf6ec;--bg-card:#faf6ec;--bg-hover:#e7e0cf;--bg-input:#ffffff;--bg-topbar:#F4EFE4;--bg-sidebar:#F4EFE4;
+  --text-primary:#20201d;--text-secondary:#78715f;--text-muted:#a39b86;--border:#20201d;--border-soft:#d8cfb8;--line:#C08A2A;
+}
+[data-style="ornament"][data-mode="console"]{
+  --bg-base:#15160f;--bg-panel:#1d1e17;--bg-card:#1d1e17;--bg-hover:#2c2e26;--bg-input:#1d1e17;--bg-topbar:#15160f;--bg-sidebar:#15160f;
+  --text-primary:#ECE6D8;--text-secondary:#b0a890;--text-muted:#8a8470;--border:#ECE6D8;--border-soft:#33352a;--line:#E3B55C;
+}
+
+/* ═══ Identity-rooted presets (locked 2026-10-27) ════════════════════════ */
+
+/* ── Imprint / Brand-Identity ── Fraunces + Inter, ink+cream+terracotta, flat */
+[data-style="imprint"]{
+  --font-display:"Fraunces",Georgia,serif;--font-body:"Inter",sans-serif;--font-mono:"IBM Plex Mono",monospace;
+  --accent:#C8452A;--accent-dim:rgba(200,69,42,.09);--accent-glow:rgba(200,69,42,.20);--sev-bad:#C8452A;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="imprint"][data-mode="clean"]{
+  --bg-base:#F4F0E6;--bg-panel:#faf7ee;--bg-card:#faf7ee;--bg-hover:#ece7d9;--bg-input:#ffffff;--bg-topbar:#F4F0E6;--bg-sidebar:#F4F0E6;
+  --text-primary:#1A1A17;--text-secondary:#6f6a5e;--text-muted:#8a8275;--border:#1A1A17;--border-soft:#dcd4c2;--line:#1A1A17;
+}
+[data-style="imprint"][data-mode="console"]{
+  --bg-base:#15140f;--bg-panel:#1c1b15;--bg-card:#1c1b15;--bg-hover:#26251d;--bg-input:#1c1b15;--bg-topbar:#15140f;--bg-sidebar:#15140f;
+  --text-primary:#F4F0E6;--text-secondary:#b0ab9c;--text-muted:#8a8275;--border:#F4F0E6;--border-soft:#2a281f;--line:#F4F0E6;
+}
+
+/* ── Dieline / Packaging-Label (module) ── Space Grotesk + IBM Plex Mono, kraft + foil */
+[data-style="dieline"]{
+  --font-display:"Space Grotesk","Inter",sans-serif;--font-mono:"IBM Plex Mono",monospace;--font-body:"IBM Plex Mono",monospace;
+  --accent:#B89550;--accent-dim:rgba(184,149,80,.12);--accent-glow:rgba(184,149,80,.24);--sev-warn:#B89550;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="dieline"][data-mode="clean"]{
+  --bg-base:#E7E1D4;--bg-panel:#efe9dc;--bg-card:#efe9dc;--bg-hover:#ddd6c6;--bg-input:#fffdf8;--bg-topbar:#E7E1D4;--bg-sidebar:#E7E1D4;
+  --text-primary:#1C1B19;--text-secondary:#5f594e;--text-muted:#7c7566;--border:#1C1B19;--border-soft:#cfc7b5;--line:#cfc7b5;
+}
+[data-style="dieline"][data-mode="console"]{
+  --bg-base:#141311;--bg-panel:#1b1a16;--bg-card:#1b1a16;--bg-hover:#252320;--bg-input:#1b1a16;--bg-topbar:#141311;--bg-sidebar:#141311;
+  --text-primary:#E7E1D4;--text-secondary:#a89f8c;--text-muted:#7c7566;--border:#B89550;--border-soft:#2a2822;--line:#2a2822;
+}
+
+/* ── Revolve / Symmetric-Animated ── Outfit + Inter, two-colour high contrast, rounded */
+[data-style="revolve"]{
+  --font-display:"Outfit","Inter",sans-serif;--font-body:"Inter",sans-serif;
+  --accent:#2F5BEA;--accent-dim:rgba(47,91,234,.09);--accent-glow:rgba(47,91,234,.22);--sev-info:#2F5BEA;
+  --radius-xs:6px;--radius-sm:10px;--radius-md:14px;--radius-lg:18px;--radius-xl:24px;
+  --elev-1:0 1px 2px rgba(17,17,20,.05);--elev-2:0 6px 20px -12px rgba(17,17,20,.3);--elev-3:0 16px 40px -18px rgba(17,17,20,.4);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="revolve"][data-mode="clean"]{
+  --bg-base:#ffffff;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#f3f4f9;--bg-input:#ffffff;--bg-topbar:#ffffff;--bg-sidebar:#fbfbfe;
+  --text-primary:#111114;--text-secondary:#5b5b64;--text-muted:#9a9aa4;--border:#e6e7ee;--border-soft:#eff0f5;--line:#e6e7ee;
+}
+[data-style="revolve"][data-mode="console"]{
+  --bg-base:#0c0c0f;--bg-panel:#141418;--bg-card:#141418;--bg-hover:#1e1e24;--bg-input:#141418;--bg-topbar:#0c0c0f;--bg-sidebar:#0c0c0f;
+  --text-primary:#ffffff;--text-secondary:#9a9aa6;--text-muted:#64646e;--border:#26262e;--border-soft:#1c1c22;--line:#26262e;
+}
+
+/* ═══ Disciplined tier — Swiss lineage (locked 2026-10-27) ═══════════════ */
+
+/* ── New Wave / Swiss Punk ── Archivo Expanded + Inter, magenta/cyan, flat, grid-broken-from-mastery */
+[data-style="newwave"]{
+  --font-display:"Archivo Expanded","Archivo",sans-serif;--font-body:"Inter",sans-serif;--font-mono:"Space Mono",monospace;
+  --accent:#FF2D78;--accent-dim:rgba(255,45,120,.10);--accent-glow:rgba(255,45,120,.24);--sev-bad:#FF2D78;--sev-info:#00B4D8;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="newwave"][data-mode="clean"]{
+  --bg-base:#F2F0EB;--bg-panel:#faf9f5;--bg-card:#faf9f5;--bg-hover:#e7e5de;--bg-input:#ffffff;--bg-topbar:#F2F0EB;--bg-sidebar:#F2F0EB;
+  --text-primary:#0A0A0A;--text-secondary:#5a5852;--text-muted:#8a877f;--border:#0A0A0A;--border-soft:#d6d3cc;--line:#0A0A0A;
+}
+[data-style="newwave"][data-mode="console"]{
+  --bg-base:#0A0A0A;--bg-panel:#121212;--bg-card:#121212;--bg-hover:#1c1c1c;--bg-input:#121212;--bg-topbar:#0A0A0A;--bg-sidebar:#0A0A0A;
+  --text-primary:#F2F0EB;--text-secondary:#a8a69e;--text-muted:#78756c;--border:#F2F0EB;--border-soft:#262626;--line:#F2F0EB;
+}
+
+/* ── Vignelli / Corporate Modernism ── one face (Archivo), one red, radius 0, flat */
+[data-style="vignelli"]{
+  --font-display:"Archivo",Helvetica,Arial,sans-serif;--font-body:"Archivo",Helvetica,Arial,sans-serif;--font-mono:"Space Mono",monospace;
+  --accent:#D81E2C;--accent-dim:rgba(216,30,44,.08);--accent-glow:rgba(216,30,44,.20);--sev-bad:#D81E2C;--sev-info:#0B3D91;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="vignelli"][data-mode="clean"]{
+  --bg-base:#ffffff;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#f2f2f2;--bg-input:#ffffff;--bg-topbar:#ffffff;--bg-sidebar:#ffffff;
+  --text-primary:#111111;--text-secondary:#555555;--text-muted:#8a8a8a;--border:#111111;--border-soft:#dcdcdc;--line:#111111;
+}
+[data-style="vignelli"][data-mode="console"]{
+  --bg-base:#0b0b0b;--bg-panel:#0b0b0b;--bg-card:#111111;--bg-hover:#1a1a1a;--bg-input:#111111;--bg-topbar:#0b0b0b;--bg-sidebar:#0b0b0b;
+  --text-primary:#f4f4f4;--text-secondary:#9a9a9a;--text-muted:#6a6a6a;--border:#f4f4f4;--border-soft:#2a2a2a;--line:#f4f4f4;
+}
+
+/* ── Gridnik / Dutch Modernism ── Space Grotesk + Space Mono, blueprint blue, visible lattice (45 cut = recipe) */
+[data-style="gridnik"]{
+  --font-display:"Space Grotesk","IBM Plex Sans",sans-serif;--font-mono:"Space Mono",monospace;--font-body:"IBM Plex Sans","Inter",sans-serif;
+  --accent:#2B4CF0;--accent-dim:rgba(43,76,240,.09);--accent-glow:rgba(43,76,240,.22);--sev-info:#2B4CF0;--sev-bad:#E8402A;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="gridnik"][data-mode="clean"]{
+  --bg-base:#FAFAF8;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#f0f0ec;--bg-input:#ffffff;--bg-topbar:#FAFAF8;--bg-sidebar:#FAFAF8;
+  --text-primary:#1A1A1A;--text-secondary:#5a5a56;--text-muted:#8A8A84;--border:#1A1A1A;--border-soft:#D2D2CC;--line:#D2D2CC;
+}
+[data-style="gridnik"][data-mode="console"]{
+  --bg-base:#101014;--bg-panel:#16161b;--bg-card:#16161b;--bg-hover:#20202a;--bg-input:#16161b;--bg-topbar:#101014;--bg-sidebar:#101014;
+  --text-primary:#ECEAE3;--text-secondary:#a0a09a;--text-muted:#7D7D86;--border:#ECEAE3;--border-soft:#2A2A32;--line:#2A2A32;
+}
+
+/* ── Japans / Ma ── Shippori Mincho + Noto Sans JP, washi + sumi + one vermilion seal, airy, flat */
+[data-style="japans"]{
+  --font-display:"Shippori Mincho",serif;--font-body:"Noto Sans JP","Inter",sans-serif;--font-mono:"IBM Plex Mono",monospace;
+  --accent:#E8491D;--accent-dim:rgba(232,73,29,.08);--accent-glow:rgba(232,73,29,.18);
+  --sev-ok:#6B9362;--sev-bad:#E8491D;--sev-info:#264348;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="japans"][data-mode="clean"]{
+  --bg-base:#F2ECDC;--bg-panel:#f7f2e6;--bg-card:#f7f2e6;--bg-hover:#e9e1cc;--bg-input:#ffffff;--bg-topbar:#F2ECDC;--bg-sidebar:#F2ECDC;
+  --text-primary:#27221F;--text-secondary:#6f685c;--text-muted:#8A8172;--border:#C9C0AC;--border-soft:#ddd5c0;--line:#C9C0AC;
+}
+[data-style="japans"][data-mode="console"]{
+  --bg-base:#1A1715;--bg-panel:#221e1b;--bg-card:#221e1b;--bg-hover:#2b2723;--bg-input:#221e1b;--bg-topbar:#1A1715;--bg-sidebar:#1A1715;
+  --text-primary:#ECE4D4;--text-secondary:#b0a890;--text-muted:#8a8172;--border:#3A332C;--border-soft:#2a251f;--line:#3A332C;
+}
+
+/* ── Atelier / Verfijnd licht register ── chipx's eigen MC-herwerking: 1 humanistische familie (Hanken Grotesk), 1 tonaal palet, GEHARMONISEERDE tonale chips (familie i.p.v. verkeerslicht), kalme grid, zachte schaduw. Eenheid + karakter + ingetogen. */
+[data-style="atelier"]{
+  --font-display:"Hanken Grotesk","Inter",sans-serif;--font-body:"Hanken Grotesk","Inter",sans-serif;--font-mono:"IBM Plex Mono",monospace;
+  --accent:#3C7C72;--accent-dim:rgba(60,124,114,.08);--accent-glow:rgba(60,124,114,.16);
+  --sev-ok:#4F8A6E;--sev-warn:#C2923F;--sev-bad:#C06152;--sev-info:#4E6F96;
+  --fill-ok:rgba(79,138,110,.12);--fill-warn:rgba(194,146,63,.12);--fill-bad:rgba(192,97,82,.12);--fill-info:rgba(78,111,150,.12);
+  --radius-xs:6px;--radius-sm:8px;--radius-md:10px;--radius-lg:14px;--radius-xl:20px;
+  --elev-1:0 1px 2px rgba(40,38,34,.05);--elev-2:0 2px 8px rgba(40,38,34,.06),0 1px 2px rgba(40,38,34,.04);--elev-3:0 10px 28px rgba(40,38,34,.08);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+}
+[data-style="atelier"][data-mode="clean"]{
+  --bg-base:#F4F2ED;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-hover:#ECEAE3;--bg-input:#ffffff;--bg-topbar:#F4F2ED;--bg-sidebar:#F4F2ED;
+  --text-primary:#2A2824;--text-secondary:#6B6860;--text-muted:#9A968C;--border:#E3E0D8;--border-soft:#EDEAE3;--line:#E3E0D8;
+}
+[data-style="atelier"][data-mode="console"]{
+  --accent:#4F9A8E;--accent-glow:rgba(79,154,142,.20);
+  --bg-base:#1C1A17;--bg-panel:#24211D;--bg-card:#24211D;--bg-hover:#2C2823;--bg-input:#24211D;--bg-topbar:#1C1A17;--bg-sidebar:#1C1A17;
+  --text-primary:#EDE9E0;--text-secondary:#ADA89C;--text-muted:#7E7A70;--border:#34302A;--border-soft:#2A2621;--line:#34302A;
+}
+
+/* ═══ Art Nouveau vs Art Deco — het ankerpaar (locked 2026-10-31) ═════════
+   Zie references/style-lexicon.md voor de volledige profielen. */
+
+/* ── Art Deco ── Poiret One + Cinzel, ECHT glanzend goud, symmetrisch, radius 0,
+   sunburst/ziggurat/dubbele-haarlijn. Luxe en geometrisch. Font: Poiret One + Cinzel. */
+[data-style="deco"]{
+  --font-display:"Poiret One","Cinzel",serif;
+  --accent:#C9A227;--accent-dim:rgba(201,162,39,.12);--accent-glow:rgba(201,162,39,.26);
+  --sev-ok:#2F8F6B;--sev-warn:#C9A227;--sev-bad:#9E2B25;--sev-info:#2E6E8F;
+  --radius-xs:0;--radius-sm:0;--radius-md:0;--radius-lg:0;--radius-xl:0;--radius-pill:999px;
+  --elev-1:none;--elev-2:none;--elev-3:none;--metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+  --tracking-mega:.22em;
+}
+[data-style="deco"][data-mode="clean"]{
+  --bg-base:#EDE6D6;--bg-panel:#F3EEE0;--bg-card:#F5EFE1;--bg-hover:#E3DAC7;--bg-input:#ffffff;--bg-topbar:#EDE6D6;--bg-sidebar:#EDE6D6;
+  --text-primary:#0E0E10;--text-secondary:#5a5342;--text-muted:#8a8168;--border:#0E0E10;--border-soft:#cfc4a8;--line:#C9A227;
+}
+[data-style="deco"][data-mode="console"]{
+  --bg-base:#0E0E10;--bg-panel:#141416;--bg-card:#17171a;--bg-hover:#201f22;--bg-input:#17171a;--bg-topbar:#0E0E10;--bg-sidebar:#0E0E10;
+  --text-primary:#EDE6D6;--text-secondary:#b6ad97;--text-muted:#817a66;--border:#C9A227;--border-soft:#2a2823;--line:#C9A227;
+}
+
+/* ── Van de Velde ── Art Nouveau. Or Lemmen/Zarathustra (local) + Fraunces, MATTE
+   oker (geen nep-goud = material sincerity), vloeiende radii, zachte schaduw,
+   warm tonaal palet, geharmoniseerde tonale chips. Font: Fraunces (+ Or Lemmen local). */
+[data-style="velde"]{
+  --font-display:"Or Lemmen","Zarathustra","Fraunces",Georgia,serif;
+  --accent:#C9883C;--accent-dim:rgba(201,136,60,.10);--accent-glow:rgba(201,136,60,.20);
+  --sev-ok:#6E7A52;--sev-warn:#C9883C;--sev-bad:#A6492F;--sev-info:#2E5A5E;
+  --fill-ok:rgba(110,122,82,.12);--fill-warn:rgba(201,136,60,.12);--fill-bad:rgba(166,73,47,.12);--fill-info:rgba(46,90,94,.12);
+  --radius-xs:4px;--radius-sm:8px;--radius-md:12px;--radius-lg:18px;--radius-xl:26px;
+  --elev-1:0 1px 2px rgba(42,33,26,.05);--elev-2:0 2px 10px rgba(42,33,26,.07),0 1px 2px rgba(42,33,26,.04);--elev-3:0 12px 32px rgba(42,33,26,.10);
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;--tracking-wide:.08em;
+}
+[data-style="velde"][data-mode="clean"]{
+  --bg-base:#EDE4D2;--bg-panel:#F5EEDD;--bg-card:#F7F1E2;--bg-hover:#E3D8C0;--bg-input:#ffffff;--bg-topbar:#EDE4D2;--bg-sidebar:#EDE4D2;
+  --text-primary:#2A211A;--text-secondary:#6B5E4C;--text-muted:#9A8B73;--border:#D8C9A8;--border-soft:#E6DAC0;--line:#C9883C;
+}
+[data-style="velde"][data-mode="console"]{
+  --bg-base:#211B15;--bg-panel:#2A231B;--bg-card:#2E261D;--bg-hover:#382F24;--bg-input:#2E261D;--bg-topbar:#211B15;--bg-sidebar:#211B15;
+  --text-primary:#EDE4D2;--text-secondary:#C2B49A;--text-muted:#8A7C66;--border:#4A3F30;--border-soft:#362E24;--line:#C9883C;
+}
+
+/* ═══ Kawaii / Sumikko Gurashi — breed kawaii register met Sumikko-kern (locked 2026-11-09)
+   M PLUS Rounded 1c + Fredoka, GEDEMPTE pastels op crème, taupe tekenlijnen (nooit zwart),
+   zeer ronde radii, zachte diffuse schaduw. Rustig-schattig: "leven in het hoekje" (すみっコぐらし).
+   Zie references/style-lexicon.md voor het volledige profiel. ═══════════════════════════════ */
+[data-style="kawaii"]{
+  --font-display:"M PLUS Rounded 1c","Fredoka",sans-serif;
+  --font-body:"M PLUS Rounded 1c","Nunito",sans-serif;
+  --font-mono:"M PLUS Rounded 1c","Nunito",sans-serif;   /* kawaii kent geen mono: blijf rond */
+  /* mascotte-pastels — gedempte vullingen (geen neon), zoals het Sumikko-gezelschap */
+  --kw-sky:#86D3EC;--kw-mint:#AEDBA6;--kw-butter:#F6D98A;--kw-rose:#F4A9C4;--kw-lilac:#C9B6E4;--kw-cream:#FBF4E2;
+  --kw-outline:#B29B80;                                   /* zachte taupe tekenlijn — het kenmerk, nooit zwart */
+  --kw-peach:#F7C6A3;                                     /* zesde mascotte-pastel (stond al in het specimen, nu ook als token) */
+  --color-policy:fixed;                                   /* KLEUR VAST: palet = sky/mint/butter/rose/lilac/peach/cream + taupe lijn + cacao-ink. Geen nieuwe tinten, geen skin, geen mood-palet-dials. */
+  /* critter DB (references/critter-db.md): figuurtjes staan op pastel in beide modes, dus lijn en ink zijn mode-onafhankelijk */
+  --kw-critter-line:#B29B80;                              /* figuurlijn: zelfde taupe als --kw-outline, maar flipt NIET in console */
+  --kw-ink:#5C5248;                                       /* ogen + mond: cacao, nooit zwart (zelfde waarde als clean --text-primary) */
+  --kw-critter-cream:#FBF4E2;                             /* buik, snuit, oogring, highlight: zelfde crème als --kw-cream in clean, maar flipt NIET in console */
+  --kw-stroke:4;                                          /* lijndikte in viewBox-eenheden (cel 200x200, lichaam ~112 breed): één dikte per figuur */
+  --kw-stroke-detail:3;                                   /* mond en glinsters */
+  --kw-huddle-size:180px;                                 /* breedte van één figuurtje in een hoekje-huddle */
+  --accent:#2FB6D9;--accent-dim:rgba(47,182,217,.12);--accent-glow:rgba(47,182,217,.26);
+  --sev-ok:#8DC97E;--sev-warn:#EFC05C;--sev-bad:#F18BAE;--sev-info:#6FC6E6;
+  --fill-ok:color-mix(in srgb,var(--sev-ok) 18%,white);--fill-warn:color-mix(in srgb,var(--sev-warn) 18%,white);--fill-bad:color-mix(in srgb,var(--sev-bad) 18%,white);
+  --radius-xs:10px;--radius-sm:14px;--radius-md:20px;--radius-lg:26px;--radius-xl:34px;--radius-pill:999px;  /* alles kussentjes-rond */
+  --elev-1:0 2px 6px rgba(150,128,104,.12);
+  --elev-2:0 6px 18px rgba(150,128,104,.14),0 2px 4px rgba(150,128,104,.07);
+  --elev-3:0 14px 36px rgba(150,128,104,.16);            /* zachte warme diffuse schaduw, nooit hard */
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;
+  --tracking-wide:.02em;--tracking-mega:.10em;
+}
+[data-style="kawaii"][data-mode="clean"]{
+  --bg-base:#FBF6EA;--bg-panel:#FFFDF6;--bg-card:#FFFDF6;--bg-hover:#F4ECD8;--bg-input:#FFFFFF;--bg-topbar:#FBF6EA;--bg-sidebar:#FBF6EA;
+  --text-primary:#5C5248;--text-secondary:#8C8072;--text-muted:#B4A694;--border:#ECE0C9;--border-soft:#F3EBD9;--line:#ECE0C9;  /* warme cocoa-tekst, geen zwart */
+}
+[data-style="kawaii"][data-mode="console"]{
+  --bg-base:#2A2633;--bg-panel:#332E40;--bg-card:#332E40;--bg-hover:#3D3650;--bg-input:#332E40;--bg-topbar:#2A2633;--bg-sidebar:#2A2633;  /* cozy nacht-plum */
+  --text-primary:#F3ECF5;--text-secondary:#C0B4CC;--text-muted:#8C819A;--border:#453D55;--border-soft:#3A3349;--line:#453D55;
+  --kw-cream:#413A52;--kw-outline:#CDBFE0;               /* lichte lijn op de nacht-plum */
+  --accent:#8FDCF0;--accent-dim:rgba(143,220,240,.14);--accent-glow:rgba(143,220,240,.30);
+  --elev-1:0 2px 6px rgba(0,0,0,.30);--elev-2:0 6px 20px rgba(0,0,0,.40);--elev-3:0 14px 38px rgba(0,0,0,.50);
+}
+
+/* ═══ Check Box — donker dashboard-register naar Bogdan Nikitin (Nixtio) (locked 2026-11-09)
+   Zwart canvas, #1F1F1F-kaarten, alles pill/capsule-rond, drie data-tinten lime / oranje / wit,
+   legend = "jewel"-checkbox (ring + gekleurde stip). Oswald (condensed caps) voor titels en
+   cijfers, Manrope voor UI-tekst. Console is de native modus; clean is een warme lichte afleiding.
+   Gemeten (≈ exact) uit styleguides/checkbox-design.webp: #000000, #1F1F1F, #1E1E1E/#212121,
+   #B9FF66, #FF9B22, #FFFFFF. Waarden met (est.) zijn geschat. Bronnen: styleguides/refs/nikitin/. ═══ */
+[data-style="checkbox"]{
+  --font-display:"Oswald","Bebas Neue","Arial Narrow",sans-serif;   /* condensed caps: CHECK BOX, 2,4% */
+  --font-body:"Manrope","Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",monospace;           /* (est.) enkel voor ID's/tijdstempels */
+  /* drie data-tinten — de categorische reeks; lime is het accent */
+  --cb-lime:#B9FF66;--cb-orange:#FF9B22;--cb-white:#FFFFFF;
+  --cb-series-1:var(--cb-lime);--cb-series-2:var(--cb-orange);--cb-series-3:var(--cb-white);
+  --cb-series-1-line:var(--cb-series-1);                            /* lime als lijn/ring/stip (niet-tekst-UI); clean: donkere lime */
+  --cb-on-series:#0B0B0B;--cb-on-dark:#FFFFFF;                      /* tekst óp een lichte capsule / óp een zwarte pill */
+  --accent:var(--cb-lime);--accent-dim:rgba(185,255,102,.14);--accent-glow:rgba(185,255,102,.32);
+  --sev-ok:#B9FF66;--sev-warn:#FF9B22;--sev-bad:#FF5A5F;--sev-info:#8FD3FF;   /* bad + info (est.): niet in de mock */
+  --fill-ok:rgba(185,255,102,.16);--fill-warn:rgba(255,155,34,.16);--fill-bad:rgba(255,90,95,.16);
+  /* vormen: kaarten ruim rond, al de rest capsule */
+  --radius-xs:8px;--radius-sm:12px;--radius-md:18px;--radius-lg:24px;--radius-xl:32px;--radius-pill:999px;
+  --cb-frame-radius:40px;                                           /* (est.) buitenste app-frame */
+  --cb-stage:#C5E1A5;                                               /* presentatie-grond rond het frame (gemeten), enkel specimens/hero */
+  --cb-ring:2px;                                                    /* jewel-ring dikte */
+  --cb-jewel:16px;--cb-jewel-dot:6px;                               /* legend-checkbox: buiten Ø / stip Ø */
+  --cb-pill-h:44px;--cb-icon-btn:44px;--cb-capsule-w:34px;          /* nav-pill, ronde icon-knop, bubble-capsule (est.) */
+  /* maatvoering recepten (est., afgelezen van de mock) — als token, zodat recepten px-vrij blijven */
+  --cb-hairline:var(--border-w);                                    /* rail, gestippelde gridlijn, verborgen input */
+  --cb-delta-w:6px;--cb-delta-h:9px;                                /* delta-driehoek: halve basis / hoogte */
+  --cb-dot:8px;--cb-icon:18px;--cb-chevron:7px;--cb-chevron-w:1.5px;
+  --cb-avatar:24px;--cb-avatar-ring:var(--border-w-thick);--cb-avatar-overlap:6px;--cb-avatar-fs:var(--fs-xs);
+  --cb-badge:18px;--cb-badge-fs:var(--fs-xs);                             /* meldingsbolletje op de avatar */
+  --cb-chart-h:180px;--cb-lane-h:32px;--cb-gantt-date:48px;--cb-spark-h:56px;
+  --cb-dotfield-r:3px;--cb-dotfield-edge:3.5px;--cb-dotfield-x:16px;--cb-dotfield-y:14px;
+  --cb-frame-max:1360px;                                            /* specimen-frame, niet voor apps */
+  --metal-panel:var(--bg-card);--metal-bezel:var(--bg-hover);--metal-groove:none;   /* geen metaal: plat */
+  --tracking-wide:.02em;--tracking-mega:.06em;
+}
+[data-style="checkbox"][data-mode="console"]{
+  --bg-base:#000000;--bg-panel:#1F1F1F;--bg-card:#1F1F1F;--bg-hover:#2A2A2A;--bg-input:#1E1E1E;--bg-topbar:#000000;--bg-sidebar:#000000;
+  --cb-pill:#1E1E1E;--cb-pill-active:#2B2B2B;                       /* nav-pill rust / actief (actief est.) */
+  --text-primary:#FFFFFF;--text-secondary:#A3A3A3;--text-muted:#8A8A8A;   /* secundair (est.); muted ≥4.5:1: 4.77 kaart · 6.08 canvas, berekend */
+  --border:#2A2A2A;--border-soft:#262626;--line:#3A3A3A;            /* line = gestippelde chart-gridlijnen (est.) */
+  --elev-1:none;--elev-2:none;--elev-3:0 24px 60px rgba(0,0,0,.45); /* plat; diepte = kleurlaag, geen schaduw */
+  --cb-glow:0 0 0 4px rgba(185,255,102,.18);                        /* hover/focus-halo rond jewel (est.) */
+  --focus-ring:0 0 0 2px #000000,0 0 0 4px var(--cb-lime);
+}
+[data-style="checkbox"][data-mode="clean"]{
+  /* afgeleid van Nikitins lichte shots (HR / Finance): warm grijs-crème, zwarte pills, lime blijft accent */
+  --bg-base:#ECEBE6;--bg-panel:#FFFFFF;--bg-card:#FFFFFF;--bg-hover:#F3F2ED;--bg-input:#FFFFFF;--bg-topbar:#ECEBE6;--bg-sidebar:#111111;
+  --cb-pill:#111111;--cb-pill-active:#000000;
+  --cb-white:#111111;--cb-series-3:#111111;                         /* derde reeks wordt zwart op licht */
+  --cb-series-1-line:#578F1E;                                       /* lime-lijn ≥3:1 (WCAG 1.4.11): 3.92 wit · 3.29 crème, berekend; capsules blijven fel lime */
+  --cb-on-series:#0B0B0B;
+  /* accent + ok/warn donkerder tot ≥3:1 op --bg-base #ECEBE6 én wit (WCAG 1.4.11), tint behouden; berekend, niet gemeten:
+     accent 3.29/3.92 · sev-ok 3.31/3.96 · sev-warn 3.21/3.83; #0B0B0B-tekst op accent 5.02:1. Data-capsules blijven fel lime. */
+  --accent:#578F1E;--accent-dim:rgba(87,143,30,.14);--accent-glow:rgba(87,143,30,.30);
+  --sev-ok:#4C9016;--sev-warn:#C06E0C;--sev-bad:#E5484D;--sev-info:#3A9BDC;
+  --fill-ok:rgba(76,144,22,.12);--fill-warn:rgba(192,110,12,.12);--fill-bad:rgba(229,72,77,.12);
+  --cb-glow:0 0 0 4px rgba(87,143,30,.22);
+  --text-primary:#111111;--text-secondary:#5E5E5A;--text-muted:#6A6A64;   /* muted ≥4.5:1: 5.44 wit · 4.56 crème, berekend */
+  --border:#DEDDD6;--border-soft:#EAE9E3;--line:#D5D4CC;
+  --elev-1:0 1px 2px rgba(17,17,17,.05);--elev-2:0 6px 20px rgba(17,17,17,.06);--elev-3:0 18px 48px rgba(17,17,17,.10);
+  --focus-ring:0 0 0 2px #FFFFFF,0 0 0 4px #111111;
+}

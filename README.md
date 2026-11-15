@@ -23,6 +23,10 @@ De kaart werkt met muis en touch. Met het toetsenbord gebruik je `Tab` en `Enter
 
 Bij minder dan 10 opgeslagen scores komt iedere voltooide poging in aanmerking. Daarna kwalificeert alleen een tijd die strikt sneller is dan de huidige nummer 10. Namen zijn maximaal 24 tekens.
 
+## Vormgeving
+
+De interface gebruikt de lokale Stylez-tokens uit `stylez-tokens.css` met de `clean`-modus en het `kawaii`-preset. De pastelkaart, afgeronde kaarten en hoekjesvriendjes (`pals/*.webp`, met een AI-beeldtool getekend in de kawaii-stijl) vormen samen een speelse reisclub; `prefers-reduced-motion` schakelt de decoratieve beweging uit.
+
 ## Geografische data
 
 De vereenvoudigde SVG-paden in `map-data.js` zijn afgeleid van `Belgium.provinces.WGS84.geojson` uit [Belgium Geographic Data](https://github.com/mathiasleroy/Belgium-Geographic-Data), copyright 2015 Mathias Leroy, beschikbaar onder de MIT-licentie. Brussel is uit de speelbare gebieden gefilterd. De WGS84-coördinaten worden lokaal equirectangulair geprojecteerd met lengtegraadcorrectie op de gemiddelde Belgische breedtegraad, zodat de landsvorm niet horizontaal wordt uitgerekt.
